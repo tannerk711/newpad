@@ -1,0 +1,88 @@
+---
+// Pick Your Path: 3 product category tiles with real photos.
+// Each tile links to the form (pre-selected in Phase 4).
+import { Image } from 'astro:assets';
+import tileInfill from '../assets/tiles/tile-infill.png';
+import tileCommunity from '../assets/tiles/tile-community.png';
+import tileDuplex from '../assets/tiles/tile-duplex.png';
+
+const tiles = [
+  {
+    title: 'New Infill Homes',
+    description: 'Modern new builds in close-to-everything locations. Distinct design, everyday convenience.',
+    cta: 'Browse New Infill Homes',
+    href: '#lead-form',
+    image: tileInfill,
+    imageAlt: 'A modern new construction infill home in Fort Worth',
+  },
+  {
+    title: 'Community Homes',
+    description: 'NewPad communities with quality finishes, thoughtful layouts, and value-first pricing.',
+    cta: 'Browse Communities',
+    href: '#lead-form',
+    image: tileCommunity,
+    imageAlt: 'Aerial view of a NewPad residential community',
+  },
+  {
+    title: 'Duplexes',
+    description: 'Smart, flexible living. Great for multi-gen needs or investment-minded buyers.',
+    cta: 'Browse Duplexes',
+    href: '#lead-form',
+    image: tileDuplex,
+    imageAlt: 'A modern new construction duplex in Fort Worth',
+  },
+];
+---
+
+<section id="pick-your-path" class="bg-white py-16 md:py-24">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-3xl text-center">
+      <h2 data-gsap="heading" class="text-3xl font-bold tracking-tight text-forest md:text-4xl">
+        Pick Your Path
+      </h2>
+      <p data-gsap="subhead" class="mt-4 text-lg text-gray-500">
+        Three ways to buy with NewPad. Pick what fits.
+      </p>
+    </div>
+
+    <div class="mt-12 grid gap-6 md:grid-cols-3">
+      {tiles.map((tile) => (
+        <a
+          href={tile.href}
+          data-gsap="tile"
+          class="group relative flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
+        >
+          <!-- Tile photo -->
+          <div class="relative aspect-[4/3] overflow-hidden">
+            <Image
+              src={tile.image}
+              alt={tile.imageAlt}
+              widths={[400, 600, 800]}
+              sizes="(max-width: 768px) 100vw, 33vw"
+              format="webp"
+              quality={75}
+              loading="lazy"
+              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <!-- Gradient overlay for text readability on hover -->
+            <div class="absolute inset-0 bg-gradient-to-t from-forest/20 to-transparent opacity-0 transition-opacity group-hover:opacity-100"></div>
+          </div>
+
+          <!-- Text content -->
+          <div class="flex flex-1 flex-col p-6">
+            <h3 class="text-xl font-bold text-forest">{tile.title}</h3>
+            <p class="mt-2 flex-1 text-sm leading-relaxed text-gray-500">{tile.description}</p>
+          </div>
+
+          <!-- CTA strip -->
+          <div class="flex items-center justify-between border-t border-gray-200 p-4">
+            <span class="text-sm font-semibold text-forest">{tile.cta}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5 text-forest transition-transform group-hover:translate-x-1">
+              <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+            </svg>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

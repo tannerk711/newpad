@@ -1,0 +1,73 @@
+---
+// Hero section: H1 + subhead left, multistep form right on desktop
+// Background image loaded eagerly for above-the-fold performance.
+import { Image } from 'astro:assets';
+import heroBg from '../assets/hero/hero-bg.png';
+import MultiStepForm from '../islands/MultiStepForm/MultiStepForm.tsx';
+---
+
+<section id="hero" class="relative overflow-hidden pt-24 md:pt-32">
+  <!-- Background image with overlay -->
+  <div class="absolute inset-0 z-0">
+    <Image
+      src={heroBg}
+      alt=""
+      class="h-full w-full object-cover"
+      widths={[640, 960, 1280, 1920]}
+      sizes="100vw"
+      format="webp"
+      quality={80}
+      loading="eager"
+      decoding="sync"
+      fetchpriority="high"
+    />
+    <div class="absolute inset-0 bg-sage-light/90"></div>
+  </div>
+
+  <div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid items-center gap-8 pb-16 md:grid-cols-2 md:gap-12 md:pb-24 lg:gap-16">
+      <!-- Text Content -->
+      <div class="text-center md:text-left">
+        <h1 data-hero="title" class="text-3xl font-extrabold leading-tight tracking-tight text-forest sm:text-4xl md:text-5xl lg:text-6xl">
+          New Construction Homes & Duplexes in
+          <span class="text-forest-light">Fort Worth, Texas</span>
+        </h1>
+        <p data-hero="subhead" class="mt-4 text-base leading-relaxed text-gray-500 sm:text-lg md:mt-6 md:text-xl">
+          Quality new builds with a personal touch. Tell us what you're shopping for and we'll send you available options (and any current incentives) fast. No pressure!
+        </p>
+        <div data-hero="badges" class="mt-6 flex flex-wrap items-center justify-center gap-4 md:justify-start">
+          <div class="flex items-center gap-2 text-sm font-medium text-gray-500">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-4 w-4 text-green-accent">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+            Starting at $254K
+          </div>
+          <div class="flex items-center gap-2 text-sm font-medium text-gray-500">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-4 w-4 text-green-accent">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+            1-2-6 Warranty
+          </div>
+          <div class="flex items-center gap-2 text-sm font-medium text-gray-500">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-4 w-4 text-green-accent">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+            $10K Builder Incentive
+          </div>
+        </div>
+      </div>
+
+      <!-- Multistep Gamified Form (React Island) -->
+      <div data-hero="form" class="relative" id="lead-form">
+        <MultiStepForm client:load />
+      </div>
+    </div>
+  </div>
+
+  <!-- Decorative wave transition to next section -->
+  <div class="absolute -bottom-1 left-0 right-0 z-10">
+    <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full">
+      <path d="M0 60L1440 60L1440 0C1440 0 1080 40 720 40C360 40 0 0 0 0L0 60Z" fill="white" />
+    </svg>
+  </div>
+</section>

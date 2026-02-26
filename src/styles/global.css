@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+/* ================================
+   NewPad Building Co - Design Tokens
+   ================================ */
+
+@theme {
+  /* Brand Colors */
+  --color-sage: #E3ECDC;
+  --color-sage-light: #F5F8F2;
+  --color-sage-dark: #C5D6B8;
+  --color-forest: #0F1C03;
+  --color-forest-light: #1A2E08;
+  --color-green-accent: #9DDC64;
+  --color-gold: #D4A843;
+  --color-white: #FFFFFF;
+  --color-off-white: #FEFFFB;
+  --color-gray-100: #F7F7F5;
+  --color-gray-200: #E8E8E4;
+  --color-gray-300: #D1D1CC;
+  --color-gray-400: #9C9C96;
+  --color-gray-500: #6B6B66;
+  --color-gray-600: #4A4A46;
+
+  /* Font Family */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Font Sizes */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+
+  /* Spacing */
+  --spacing-section: 5rem;
+  --spacing-section-mobile: 3rem;
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(15, 28, 3, 0.06);
+  --shadow-md: 0 4px 12px rgba(15, 28, 3, 0.08);
+  --shadow-lg: 0 8px 24px rgba(15, 28, 3, 0.12);
+  --shadow-xl: 0 16px 48px rgba(15, 28, 3, 0.16);
+
+  /* Transitions */
+  --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ================================
+   Base Styles
+   ================================ */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem; /* offset for sticky header */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-forest);
+  background-color: var(--color-white);
+  line-height: 1.6;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Selection */
+::selection {
+  background-color: var(--color-sage);
+  color: var(--color-forest);
+}
+
+/* Focus visible */
+:focus-visible {
+  outline: 2px solid var(--color-forest);
+  outline-offset: 2px;
+}
+
+/* ================================
+   Animation Utilities
+   CSS fallback animations. GSAP handles scroll-triggered reveals via data attributes.
+   ================================ */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.6s var(--ease-out) forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s var(--ease-out) forwards;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.6s var(--ease-out) forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.6s var(--ease-out) forwards;
+}
+
+/* Stagger delay utilities */
+.animate-delay-100 { animation-delay: 100ms; opacity: 0; }
+.animate-delay-200 { animation-delay: 200ms; opacity: 0; }
+.animate-delay-300 { animation-delay: 300ms; opacity: 0; }
+.animate-delay-400 { animation-delay: 400ms; opacity: 0; }
+
+/* GSAP override: when GSAP takes control in Phase 5, it manages opacity/transforms directly */
+.animate-in {
+  opacity: 1;
+  transform: translate(0, 0);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+}

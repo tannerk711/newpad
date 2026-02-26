@@ -1,0 +1,33 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import InventoryTeaser from '../components/InventoryTeaser.astro';
+import Testimonials from '../components/Testimonials.astro';
+import PickYourPath from '../components/PickYourPath.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout>
+  <Header />
+  <main>
+    <Hero />
+    <InventoryTeaser />
+    <Testimonials />
+    <PickYourPath />
+    <FinalCTA />
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  import { initHeroAnimation } from '../animations/heroAnimations';
+  import { initScrollAnimations } from '../animations/scrollAnimations';
+
+  // Run after DOM is ready
+  document.addEventListener('DOMContentLoaded', () => {
+    initHeroAnimation();
+    initScrollAnimations();
+  });
+</script>

@@ -1,0 +1,72 @@
+---
+// Inventory Teaser: Embla carousel of home cards with real photos.
+// Images are optimized to WebP via getImage() at build time, then passed to React.
+import { getImage } from 'astro:assets';
+import { homes } from '../data/homes';
+import type { HomeCardWithImage } from '../data/homes';
+import ImageCarousel from './ImageCarousel';
+
+// Static imports for each home image (Astro requires these for optimization)
+import homeExterior1 from '../assets/homes/home-exterior-1.png';
+import duplexExterior1 from '../assets/homes/duplex-exterior-1.png';
+import homeInteriorLiving from '../assets/homes/home-interior-living.png';
+import homeInteriorKitchen from '../assets/homes/home-interior-kitchen.png';
+import duplexInterior from '../assets/homes/duplex-interior.png';
+import homeExteriorDusk from '../assets/homes/home-exterior-dusk.png';
+
+// Map image filenames to imported assets
+const imageMap: Record<string, ImageMetadata> = {
+  'home-exterior-1': homeExterior1,
+  'duplex-exterior-1': duplexExterior1,
+  'home-interior-living': homeInteriorLiving,
+  'home-interior-kitchen': homeInteriorKitchen,
+  'duplex-interior': duplexInterior,
+  'home-exterior-dusk': homeExteriorDusk,
+};
+
+// Optimize all images to WebP at build time via getImage()
+const optimizedImages: Record<string, string> = {};
+for (const [key, src] of Object.entries(imageMap)) {
+  const optimized = await getImage({ src, format: 'webp', width: 600, quality: 75 });
+  optimizedImages[key] = optimized.src;
+}
+
+// Build the data array with optimized WebP URLs for the React carousel
+const homesWithImages: HomeCardWithImage[] = homes.map((home) => ({
+  ...home,
+  imageUrl: optimizedImages[home.image] ?? '',
+}));
+---
+
+<section id="inventory" class="bg-white py-16 md:py-24">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-3xl text-center">
+      <h2 data-gsap="heading" class="text-3xl font-bold tracking-tight text-forest md:text-4xl">
+        New Homes & Duplexes Available Now
+      </h2>
+      <p data-gsap="subhead" class="mt-4 text-lg text-gray-500">
+        Fort Worth new builds with smart layouts, quality finishes, and real value. Here's a sample.
+      </p>
+    </div>
+
+    <!-- Embla carousel (React island) -->
+    <div data-gsap="carousel" class="mt-12">
+      <ImageCarousel client:visible homes={homesWithImages} />
+    </div>
+
+    <div data-gsap="cta" class="mt-10 text-center">
+      <p class="mb-4 text-gray-500">
+        Want the fastest route? Fill out the form and we'll send options that fit your budget and timeline.
+      </p>
+      <a
+        href="#lead-form"
+        class="inline-flex items-center gap-2 rounded-xl bg-forest px-6 py-3 text-base font-semibold text-off-white transition-all hover:bg-forest-light hover:shadow-lg"
+      >
+        Explore Available Homes
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-4 w-4">
+          <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
