@@ -57,7 +57,7 @@ export default function ImageCarousel({ homes }: Props) {
               key={home.id}
               role="group"
               aria-roledescription="slide"
-              aria-label={`${idx + 1} of ${homes.length}: ${home.title}`}
+              aria-label={`${idx + 1} of ${homes.length}: ${home.address}`}
               className="flex-[0_0_85%] min-w-0 pl-4 md:pl-6 sm:flex-[0_0_45%] lg:flex-[0_0_33.333%]"
             >
               <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md h-full flex flex-col">
@@ -65,7 +65,7 @@ export default function ImageCarousel({ homes }: Props) {
                 <div className="relative aspect-[4/3] overflow-hidden bg-sage-light">
                   <img
                     src={home.imageUrl}
-                    alt={`${home.title} - ${home.beds} bed, ${home.baths} bath, ${home.sqft} sqft`}
+                    alt={`${home.address}, ${home.city} - ${home.sqft} sqft`}
                     loading="lazy"
                     decoding="async"
                     width={600}
@@ -85,17 +85,18 @@ export default function ImageCarousel({ homes }: Props) {
                 {/* Details */}
                 <div className="p-5 flex-1">
                   <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
-                    <h3 className="font-bold text-forest">{home.title}</h3>
+                    <div>
+                      <h3 className="font-bold text-forest">{home.address}</h3>
+                      <p className="text-sm text-gray-400">{home.city}</p>
+                    </div>
                     <span className="text-lg font-bold text-forest sm:shrink-0">
                       {home.price}
                     </span>
                   </div>
                   <div className="mt-2 flex flex-wrap items-center gap-2 text-sm text-gray-400 sm:gap-3">
-                    <span>{home.beds} bed</span>
-                    <span className="text-gray-300" aria-hidden="true">|</span>
-                    <span>{home.baths} bath</span>
-                    <span className="text-gray-300" aria-hidden="true">|</span>
                     <span>{home.sqft} sqft</span>
+                    <span className="text-gray-300" aria-hidden="true">|</span>
+                    <span className="capitalize">{home.type}</span>
                   </div>
                 </div>
               </div>

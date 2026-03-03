@@ -7,21 +7,21 @@ import type { HomeCardWithImage } from '../data/homes';
 import ImageCarousel from './ImageCarousel';
 
 // Static imports for each home image (Astro requires these for optimization)
-import homeExterior1 from '../assets/homes/home-exterior-1.png';
-import duplexExterior1 from '../assets/homes/duplex-exterior-1.png';
-import homeInteriorLiving from '../assets/homes/home-interior-living.png';
-import homeInteriorKitchen from '../assets/homes/home-interior-kitchen.png';
-import duplexInterior from '../assets/homes/duplex-interior.png';
-import homeExteriorDusk from '../assets/homes/home-exterior-dusk.png';
+import infill1 from '../assets/homes/infill-1.jpg';
+import duplex1 from '../assets/homes/duplex-1.jpg';
+import infill2 from '../assets/homes/infill-2.jpg';
+import duplex2 from '../assets/homes/duplex-2.jpg';
+import infill3 from '../assets/homes/infill-3.jpg';
+import duplex3 from '../assets/homes/duplex-3.jpg';
 
 // Map image filenames to imported assets
 const imageMap: Record<string, ImageMetadata> = {
-  'home-exterior-1': homeExterior1,
-  'duplex-exterior-1': duplexExterior1,
-  'home-interior-living': homeInteriorLiving,
-  'home-interior-kitchen': homeInteriorKitchen,
-  'duplex-interior': duplexInterior,
-  'home-exterior-dusk': homeExteriorDusk,
+  'infill-1': infill1,
+  'duplex-1': duplex1,
+  'infill-2': infill2,
+  'duplex-2': duplex2,
+  'infill-3': infill3,
+  'duplex-3': duplex3,
 };
 
 // Optimize all images to WebP at build time via getImage()

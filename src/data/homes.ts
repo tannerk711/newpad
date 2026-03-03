@@ -1,81 +1,74 @@
 export interface HomeCard {
   id: string;
-  title: string;
-  type: 'infill' | 'community' | 'duplex';
+  address: string;
+  city: string;
+  type: 'infill' | 'duplex';
   price: string;
   sqft: string;
-  beds: number;
-  baths: number;
   image: string; // Filename in src/assets/homes/ (without extension)
   status: 'For Sale' | 'Under Contract' | 'Coming Soon';
 }
 
-// Placeholder data based on NewPad's actual inventory
+// Real inventory data - alternating infill / duplex
 export const homes: HomeCard[] = [
   {
     id: '1',
-    title: 'Modern Infill Home',
+    address: '2729 Finley St',
+    city: 'Fort Worth, TX',
     type: 'infill',
-    price: '$254,000',
-    sqft: '1,278',
-    beds: 3,
-    baths: 2,
-    image: 'home-exterior-1',
+    price: '$309,000',
+    sqft: '1,659',
+    image: 'infill-1',
     status: 'For Sale',
   },
   {
     id: '2',
-    title: 'New Construction Duplex',
+    address: '333 N Field St',
+    city: 'Burleson, TX',
     type: 'duplex',
-    price: '$428,500',
-    sqft: '2,950',
-    beds: 6,
-    baths: 4,
-    image: 'duplex-exterior-1',
+    price: '$509,000',
+    sqft: '3,239',
+    image: 'duplex-1',
     status: 'For Sale',
   },
   {
     id: '3',
-    title: 'Contemporary Infill',
+    address: '209 Lead Creek Dr',
+    city: 'Fort Worth, TX',
     type: 'infill',
     price: '$299,000',
-    sqft: '1,560',
-    beds: 3,
-    baths: 2,
-    image: 'home-interior-living',
+    sqft: '1,384',
+    image: 'infill-2',
     status: 'For Sale',
   },
   {
     id: '4',
-    title: 'Spacious Family Home',
-    type: 'infill',
-    price: '$342,000',
-    sqft: '1,660',
-    beds: 4,
-    baths: 2,
-    image: 'home-interior-kitchen',
-    status: 'Under Contract',
+    address: '301 Eastland St',
+    city: 'Cleburne, TX',
+    type: 'duplex',
+    price: '$428,500',
+    sqft: '3,026',
+    image: 'duplex-2',
+    status: 'For Sale',
   },
   {
     id: '5',
-    title: 'Modern Duplex',
-    type: 'duplex',
-    price: '$509,000',
-    sqft: '3,239',
-    beds: 6,
-    baths: 4,
-    image: 'duplex-interior',
-    status: 'Coming Soon',
-  },
-  {
-    id: '6',
-    title: 'Urban Infill Home',
+    address: '2513 Birdell Ct',
+    city: 'Fort Worth, TX',
     type: 'infill',
     price: '$268,500',
     sqft: '1,397',
-    beds: 3,
-    baths: 2,
-    image: 'home-exterior-dusk',
+    image: 'infill-3',
+    status: 'For Sale',
+  },
+  {
+    id: '6',
+    address: '1128 E Broadway Ave',
+    city: 'Fort Worth, TX',
+    type: 'duplex',
+    price: '$469,000',
+    sqft: '2,950',
+    image: 'duplex-3',
     status: 'For Sale',
   },
 ];
