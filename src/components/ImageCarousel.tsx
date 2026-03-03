@@ -84,14 +84,9 @@ export default function ImageCarousel({ homes }: Props) {
 
                 {/* Details */}
                 <div className="p-5 flex-1">
-                  <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
-                    <div>
-                      <h3 className="font-bold text-forest">{home.address}</h3>
-                      <p className="text-sm text-gray-400">{home.city}</p>
-                    </div>
-                    <span className="text-lg font-bold text-forest sm:shrink-0">
-                      {home.price}
-                    </span>
+                  <div>
+                    <h3 className="font-bold text-forest">{home.address}</h3>
+                    <p className="text-sm text-gray-400">{home.city}</p>
                   </div>
                   <div className="mt-2 flex flex-wrap items-center gap-2 text-sm text-gray-400 sm:gap-3">
                     <span>{home.sqft} sqft</span>
