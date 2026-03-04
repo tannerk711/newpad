@@ -7,21 +7,15 @@ export interface FormOption {
 
 export const homeTypeOptions: FormOption[] = [
   {
-    value: 'Infill Home',
-    label: 'New Infill Home',
-    description: 'Modern new builds in close-to-everything locations. Distinct design, everyday convenience.',
+    value: 'New Single Family Home',
+    label: 'New Single Family Home',
+    description: 'Modern new builds in great locations with quality finishes and thoughtful layouts.',
     icon: 'infill',
-  },
-  {
-    value: 'Community Home',
-    label: 'Community Home',
-    description: 'Quality finishes in family-friendly neighborhoods with thoughtful layouts.',
-    icon: 'community',
   },
   {
     value: 'Duplex',
     label: 'Duplex',
-    description: 'Live in one side, rent the other, or keep family close with separate, private spaces.',
+    description: 'Perfect for investors. Live in one side, rent the other, or keep family close.',
     icon: 'duplex',
   },
 ];
@@ -47,28 +41,49 @@ export const timelineOptions: FormOption[] = [
   },
 ];
 
-export const budgetOptions: FormOption[] = [
+export const singleFamilyBudgetOptions: FormOption[] = [
   {
-    value: 'Under $275K',
-    label: 'Under $275K',
+    value: 'Under $2k/mo',
+    label: 'Under $2k/mo',
     description: '',
     icon: 'budget-1',
   },
   {
-    value: '$275K-$350K',
-    label: '$275K - $350K',
+    value: '$2k-$2,500/mo',
+    label: '$2k - $2,500/mo',
     description: '',
     icon: 'budget-2',
   },
   {
-    value: '$350K-$500K',
-    label: '$350K - $500K',
+    value: '$2,500+/mo',
+    label: '$2,500+/mo',
+    description: '',
+    icon: 'budget-3',
+  },
+];
+
+export const duplexBudgetOptions: FormOption[] = [
+  {
+    value: 'Under $450K',
+    label: 'Under $450K',
+    description: '',
+    icon: 'budget-1',
+  },
+  {
+    value: '$450K-$500K',
+    label: '$450K - $500K',
+    description: '',
+    icon: 'budget-2',
+  },
+  {
+    value: '$500K-$550K',
+    label: '$500K - $550K',
     description: '',
     icon: 'budget-3',
   },
   {
-    value: '$500K+',
-    label: '$500K+',
+    value: '$550K+',
+    label: '$550K+',
     description: '',
     icon: 'budget-4',
   },

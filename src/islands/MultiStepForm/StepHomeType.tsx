@@ -1,5 +1,5 @@
 import { useStore } from '@nanostores/react';
-import { $homeType, nextStep } from '../../stores/formStore';
+import { $homeType, $budget, nextStep } from '../../stores/formStore';
 import { homeTypeOptions } from '../../data/formOptions';
 import { iconMap } from './FormIcons';
 import SelectionCard from './SelectionCard';
@@ -9,6 +9,7 @@ export default function StepHomeType() {
 
   function handleSelect(value: string) {
     $homeType.set(value);
+    $budget.set(''); // Clear budget since options differ by home type
     setTimeout(nextStep, 350);
   }
 

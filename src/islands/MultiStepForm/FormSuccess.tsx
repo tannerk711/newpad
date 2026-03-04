@@ -172,10 +172,10 @@ export default function FormSuccess() {
             Browse Available Homes
           </a>
           <a
-            href="tel:2088660166"
+            href="tel:8176326122"
             className="block text-sm font-medium text-gray-400 transition-colors hover:text-forest"
           >
-            Call/Text Us: (208) 866-0166
+            Call/Text Us: (817) 632-6122
           </a>
         </motion.div>
       </div>
