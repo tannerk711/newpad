@@ -96,6 +96,13 @@ export async function submitForm() {
     $phone.set('');
     $email.set('');
 
+    // Fire Google Ads conversion event
+    if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
+      (window as any).gtag('event', 'conversion', {
+        send_to: 'AW-17600651621/hgdqCLmzzNwbEOXC0shB',
+      });
+    }
+
     // Move to success step
     nextStep();
   } catch (err) {
