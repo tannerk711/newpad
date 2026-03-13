@@ -23,7 +23,6 @@ export const $utmContent = persistentAtom<string>('newpad-utm-content', '');
 export const $gclid = persistentAtom<string>('newpad-gclid', '');
 export const $landingPageUrl = persistentAtom<string>('newpad-landing-url', '');
 export const $deviceType = persistentAtom<string>('newpad-device-type', '');
-export const $visitorIp = atom<string>('');
 export const $honeypot = atom<string>('');
 
 // Submission state
@@ -33,7 +32,7 @@ export const $submitError = atom<string | null>(null);
 // Direction for slide transitions (1 = forward, -1 = backward)
 export const $direction = atom(1);
 
-// Initialize tracking params from URL on page load
+// Capture tracking params from URL on page load
 export function initTrackingParams() {
   if (typeof window === 'undefined') return;
 
@@ -56,11 +55,6 @@ export function initTrackingParams() {
   else if (/Tablet|iPad/i.test(ua) || (width >= 768 && width < 1024)) device = 'tablet';
   $deviceType.set(device);
 
-  // IP address (fire-and-forget, non-blocking)
-  fetch('https://api.ipify.org?format=json')
-    .then((r) => r.json())
-    .then((data) => $visitorIp.set(data.ip || ''))
-    .catch(() => {});
 }
 
 // Computed: form payload for submission
@@ -68,12 +62,12 @@ export const $formPayload = computed(
   [
     $homeType, $timeline, $budget, $firstName, $lastName, $phone, $email,
     $utmSource, $utmMedium, $utmCampaign, $utmTerm, $utmContent,
-    $gclid, $landingPageUrl, $deviceType, $visitorIp,
+    $gclid, $landingPageUrl, $deviceType,
   ],
   (
     homeType, timeline, budget, firstName, lastName, phone, email,
     utmSource, utmMedium, utmCampaign, utmTerm, utmContent,
-    gclid, landingPageUrl, deviceType, visitorIp,
+    gclid, landingPageUrl, deviceType,
   ) => ({
     home_type: homeType,
     timeline,
@@ -93,7 +87,6 @@ export const $formPayload = computed(
     gclid,
     landing_page_url: landingPageUrl,
     device_type: deviceType,
-    ip_address: visitorIp,
   })
 );
 
@@ -130,7 +123,6 @@ export function resetForm() {
   $gclid.set('');
   $landingPageUrl.set('');
   $deviceType.set('');
-  $visitorIp.set('');
   $honeypot.set('');
   $isSubmitting.set(false);
   $submitError.set(null);
