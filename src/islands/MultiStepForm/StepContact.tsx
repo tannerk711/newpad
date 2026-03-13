@@ -10,6 +10,7 @@ import {
   $consent,
   $isSubmitting,
   $submitError,
+  $honeypot,
   submitForm,
 } from '../../stores/formStore';
 
@@ -36,6 +37,7 @@ export default function StepContact() {
   const consent = useStore($consent);
   const isSubmitting = useStore($isSubmitting);
   const submitError = useStore($submitError);
+  const honeypot = useStore($honeypot);
 
   const [errors, setErrors] = useState<FieldErrors>({});
   const [touched, setTouched] = useState<Set<string>>(new Set());
@@ -68,6 +70,20 @@ export default function StepContact() {
 
   return (
     <form onSubmit={handleSubmit} noValidate>
+      {/* Honeypot - invisible to humans, catches bots */}
+      <div className="absolute -left-[9999px] opacity-0" aria-hidden="true" tabIndex={-1}>
+        <label htmlFor="website">Website</label>
+        <input
+          type="text"
+          id="website"
+          name="website"
+          autoComplete="off"
+          tabIndex={-1}
+          value={honeypot}
+          onChange={(e) => $honeypot.set(e.target.value)}
+        />
+      </div>
+
       <div className="mb-4 text-center">
         <p className="text-sm font-medium text-green-accent">You're almost there!</p>
         <p className="mt-1 text-xs text-gray-400">

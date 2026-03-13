@@ -1,6 +1,7 @@
+import { useEffect } from 'react';
 import { useStore } from '@nanostores/react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { $currentStep, $direction, prevStep } from '../../stores/formStore';
+import { $currentStep, $direction, prevStep, initTrackingParams } from '../../stores/formStore';
 import { totalSteps } from '../../data/formOptions';
 import ProgressBar from './ProgressBar';
 import StepHomeType from './StepHomeType';
@@ -29,6 +30,10 @@ const slideVariants = {
 export default function MultiStepForm() {
   const currentStep = useStore($currentStep);
   const direction = useStore($direction);
+
+  useEffect(() => {
+    initTrackingParams();
+  }, []);
 
   const StepComponent = stepComponents[currentStep];
   const isSuccess = currentStep >= totalSteps - 1;

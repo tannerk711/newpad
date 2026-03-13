@@ -14,6 +14,18 @@ export const $phone = persistentAtom<string>('newpad-phone', '');
 export const $email = persistentAtom<string>('newpad-email', '');
 export const $consent = atom(false);
 
+// Tracking atoms (persistent to survive page refresh)
+export const $utmSource = persistentAtom<string>('newpad-utm-source', '');
+export const $utmMedium = persistentAtom<string>('newpad-utm-medium', '');
+export const $utmCampaign = persistentAtom<string>('newpad-utm-campaign', '');
+export const $utmTerm = persistentAtom<string>('newpad-utm-term', '');
+export const $utmContent = persistentAtom<string>('newpad-utm-content', '');
+export const $gclid = persistentAtom<string>('newpad-gclid', '');
+export const $landingPageUrl = persistentAtom<string>('newpad-landing-url', '');
+export const $deviceType = persistentAtom<string>('newpad-device-type', '');
+export const $visitorIp = atom<string>('');
+export const $honeypot = atom<string>('');
+
 // Submission state
 export const $isSubmitting = atom(false);
 export const $submitError = atom<string | null>(null);
@@ -21,10 +33,48 @@ export const $submitError = atom<string | null>(null);
 // Direction for slide transitions (1 = forward, -1 = backward)
 export const $direction = atom(1);
 
+// Initialize tracking params from URL on page load
+export function initTrackingParams() {
+  if (typeof window === 'undefined') return;
+
+  const params = new URLSearchParams(window.location.search);
+
+  // Only set if not already populated (preserves values on refresh)
+  if (!$utmSource.get()) $utmSource.set(params.get('utm_source') || '');
+  if (!$utmMedium.get()) $utmMedium.set(params.get('utm_medium') || '');
+  if (!$utmCampaign.get()) $utmCampaign.set(params.get('utm_campaign') || '');
+  if (!$utmTerm.get()) $utmTerm.set(params.get('utm_term') || '');
+  if (!$utmContent.get()) $utmContent.set(params.get('utm_content') || '');
+  if (!$gclid.get()) $gclid.set(params.get('gclid') || '');
+  if (!$landingPageUrl.get()) $landingPageUrl.set(window.location.href);
+
+  // Device type detection
+  const ua = navigator.userAgent;
+  const width = window.innerWidth;
+  let device = 'desktop';
+  if (/Mobi|Android/i.test(ua) || width < 768) device = 'mobile';
+  else if (/Tablet|iPad/i.test(ua) || (width >= 768 && width < 1024)) device = 'tablet';
+  $deviceType.set(device);
+
+  // IP address (fire-and-forget, non-blocking)
+  fetch('https://api.ipify.org?format=json')
+    .then((r) => r.json())
+    .then((data) => $visitorIp.set(data.ip || ''))
+    .catch(() => {});
+}
+
 // Computed: form payload for submission
 export const $formPayload = computed(
-  [$homeType, $timeline, $budget, $firstName, $lastName, $phone, $email],
-  (homeType, timeline, budget, firstName, lastName, phone, email) => ({
+  [
+    $homeType, $timeline, $budget, $firstName, $lastName, $phone, $email,
+    $utmSource, $utmMedium, $utmCampaign, $utmTerm, $utmContent,
+    $gclid, $landingPageUrl, $deviceType, $visitorIp,
+  ],
+  (
+    homeType, timeline, budget, firstName, lastName, phone, email,
+    utmSource, utmMedium, utmCampaign, utmTerm, utmContent,
+    gclid, landingPageUrl, deviceType, visitorIp,
+  ) => ({
     home_type: homeType,
     timeline,
     budget,
@@ -34,7 +84,16 @@ export const $formPayload = computed(
     email,
     consent: true,
     submitted_at: new Date().toISOString(),
-    source: 'landing-page' as const,
+    source: 'google' as const,
+    utm_source: utmSource,
+    utm_medium: utmMedium,
+    utm_campaign: utmCampaign,
+    utm_term: utmTerm,
+    utm_content: utmContent,
+    gclid,
+    landing_page_url: landingPageUrl,
+    device_type: deviceType,
+    ip_address: visitorIp,
   })
 );
 
@@ -63,11 +122,27 @@ export function resetForm() {
   $phone.set('');
   $email.set('');
   $consent.set(false);
+  $utmSource.set('');
+  $utmMedium.set('');
+  $utmCampaign.set('');
+  $utmTerm.set('');
+  $utmContent.set('');
+  $gclid.set('');
+  $landingPageUrl.set('');
+  $deviceType.set('');
+  $visitorIp.set('');
+  $honeypot.set('');
   $isSubmitting.set(false);
   $submitError.set(null);
 }
 
 export async function submitForm() {
+  // Honeypot: if filled, a bot submitted - silently fake success
+  if ($honeypot.get()) {
+    nextStep();
+    return;
+  }
+
   $isSubmitting.set(true);
   $submitError.set(null);
 
