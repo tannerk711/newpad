@@ -166,7 +166,9 @@ export default function FormSuccess() {
           transition={{ delay: 1 }}
         >
           <a
-            href="#inventory"
+            href="https://www.newpadbuildingco.com/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="block rounded-xl bg-sage px-5 py-3 text-sm font-semibold text-forest transition-colors hover:bg-sage-dark"
           >
             Browse Available Homes
