@@ -76,15 +76,14 @@ export async function submitForm() {
 
   try {
     if (webhookUrl) {
-      const res = await fetch(webhookUrl, {
+      await fetch(webhookUrl, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(
+          Object.entries(payload).map(([k, v]) => [k, String(v)])
+        ).toString(),
       });
-
-      if (!res.ok) {
-        throw new Error(`Submission failed (${res.status})`);
-      }
     }
 
     // Clear persisted form data on success
