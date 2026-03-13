@@ -8,7 +8,7 @@ export interface Testimonial {
 export const testimonials: Testimonial[] = [
   {
     quote:
-      "NewPad Building Company, you rock! Cooper's expertise made all the difference in our home project. Quality construction met our budget needs seamlessly. Our new home feels like a dream come true. If you're looking for a builder that cares about your wallet and your vision, NewPad is the one!",
+      "NewPad Building Company, you rock! Cooper's expertise made all the difference in our home project. Quality construction met our budget needs perfectly. Our new home feels like a dream come true. If you're looking for a builder that cares about your wallet and your vision, NewPad is the one!",
     name: 'Sarah & David Collins',
     label: 'NewPad Homeowner',
     highlight: "Cooper's expertise made all the difference in our home project.",

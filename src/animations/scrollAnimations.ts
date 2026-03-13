@@ -21,7 +21,8 @@ function scrollReveal(
   el: Element | null,
   trigger: string | Element,
   fromVars: gsap.TweenVars,
-  delay = 0
+  delay = 0,
+  toOverrides: gsap.TweenVars = {}
 ) {
   if (!el) return;
   gsap.set(el, { ...fromVars }); // set hidden state
@@ -37,7 +38,7 @@ function scrollReveal(
         duration: DURATION,
         ease: EASE,
         delay,
-        ...fromVars._toOverrides,
+        ...toOverrides,
       });
     },
     onEnterBack: () => {
