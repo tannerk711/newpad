@@ -156,7 +156,7 @@ export default function FormSuccess() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
         >
-          Cooper and the NewPad team will send personalized options within 24 hours.
+          The Newpad Team will send personalized options within 24 hours.
         </motion.p>
 
         <motion.div
@@ -165,14 +165,24 @@ export default function FormSuccess() {
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
         >
-          <a
-            href="https://www.newpadbuildingco.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block rounded-xl bg-sage px-5 py-3 text-sm font-semibold text-forest transition-colors hover:bg-sage-dark"
-          >
-            Browse Available Homes
-          </a>
+          <div className="flex gap-3">
+            <a
+              href="https://www.newpadbuildingco.com/infill-houses"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 rounded-xl bg-sage px-5 py-3 text-sm font-semibold text-forest transition-colors hover:bg-sage-dark"
+            >
+              Browse Available Homes
+            </a>
+            <a
+              href="https://www.newpadbuildingco.com/duplex-homes"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 rounded-xl bg-sage px-5 py-3 text-sm font-semibold text-forest transition-colors hover:bg-sage-dark"
+            >
+              Browse Available Duplexes
+            </a>
+          </div>
           <a
             href="tel:8175185008"
             className="block text-sm font-medium text-gray-400 transition-colors hover:text-forest"

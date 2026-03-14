@@ -177,11 +177,9 @@ export default function StepContact() {
             className="mt-0.5 h-4 w-4 shrink-0 rounded border-gray-300 accent-forest"
           />
           <span>
-            By submitting, you agree NewPad Building Co may call or text you about homes and your
-            request (message/data rates may apply). Consent isn't required to buy.{' '}
-            <a href="/privacy" className="underline hover:text-forest">
-              Privacy Policy & Terms
-            </a>
+            I'm ready! Let's chat options. By checking this box, I agree to receive marketing
+            SMS/email from Newpad Building Company at the contact information provided. Msg frequency
+            varies. Msg &amp; data rates may apply. Reply STOP at anytime to opt out.
           </span>
         </label>
         {errors.consent && (
