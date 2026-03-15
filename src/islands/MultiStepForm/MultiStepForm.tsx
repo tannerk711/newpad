@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { useStore } from '@nanostores/react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { $currentStep, $direction, prevStep, initTrackingParams } from '../../stores/formStore';
+import { $currentStep, $direction, $homeType, $timeline, $budget, prevStep, initTrackingParams } from '../../stores/formStore';
 import { totalSteps } from '../../data/formOptions';
+import { toDataLayerValue } from '../../utils/dataLayerMapping';
 import ProgressBar from './ProgressBar';
 import StepHomeType from './StepHomeType';
 import StepTimeline from './StepTimeline';
@@ -34,6 +35,48 @@ export default function MultiStepForm() {
   useEffect(() => {
     initTrackingParams();
   }, []);
+
+  // Fire form_step dataLayer events on forward step progression
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    // Only fire for form steps (not the success screen)
+    if (currentStep >= totalSteps - 1) return;
+    // Only fire on forward navigation (direction > 0), or step 0 on mount
+    if (currentStep > 0 && $direction.get() <= 0) return;
+
+    const stepNumber = currentStep + 1;
+    let stepName: string;
+    let formSelection: string;
+
+    switch (currentStep) {
+      case 0:
+        stepName = 'home_type';
+        formSelection = '';
+        break;
+      case 1:
+        stepName = 'timeline';
+        formSelection = toDataLayerValue($homeType.get());
+        break;
+      case 2:
+        stepName = $homeType.get() === 'Duplex' ? 'budget_range' : 'monthly_payment';
+        formSelection = toDataLayerValue($timeline.get());
+        break;
+      case 3:
+        stepName = 'contact_info';
+        formSelection = toDataLayerValue($budget.get());
+        break;
+      default:
+        return;
+    }
+
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'form_step',
+      form_step_number: stepNumber,
+      form_step_name: stepName,
+      form_selection: formSelection,
+    });
+  }, [currentStep]);
 
   const StepComponent = stepComponents[currentStep];
   const isSuccess = currentStep >= totalSteps - 1;

@@ -1,5 +1,7 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
+import { $submittedData } from '../../stores/formStore';
+import { toDataLayerValue, formatPhoneE164 } from '../../utils/dataLayerMapping';
 
 // Lightweight confetti burst using canvas (no extra dependencies)
 function useConfetti(canvasRef: React.RefObject<HTMLCanvasElement | null>) {
@@ -102,6 +104,32 @@ export default function FormSuccess() {
     const timer = setTimeout(fireConfetti, 300);
     return () => clearTimeout(timer);
   }, [fireConfetti]);
+
+  // Fire generate_lead dataLayer event on successful submission
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const data = $submittedData.get();
+    if (!data) return;
+
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'generate_lead',
+      lead_source: 'homes_form',
+      home_type: toDataLayerValue(data.homeType),
+      timeline: toDataLayerValue(data.timeline),
+      budget: toDataLayerValue(data.budget),
+      gclid: data.gclid || '',
+      utm_source: data.utmSource || '',
+      utm_medium: data.utmMedium || '',
+      utm_campaign: data.utmCampaign || '',
+      utm_term: data.utmTerm || '',
+      utm_content: data.utmContent || '',
+      device_type: data.deviceType || '',
+      landing_page: data.landingPageUrl || '',
+      user_email: data.email || '',
+      user_phone: formatPhoneE164(data.phone),
+    });
+  }, []);
 
   return (
     <div className="relative text-center">

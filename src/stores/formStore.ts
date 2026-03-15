@@ -1,5 +1,6 @@
 import { atom, computed } from 'nanostores';
 import { persistentAtom } from '@nanostores/persistent';
+import { getGA4ClientId } from '../utils/dataLayerMapping';
 
 // Form step (0-indexed: 0=home type, 1=timeline, 2=budget, 3=contact, 4=success)
 export const $currentStep = atom(0);
@@ -28,6 +29,15 @@ export const $honeypot = atom<string>('');
 // Submission state
 export const $isSubmitting = atom(false);
 export const $submitError = atom<string | null>(null);
+
+// Snapshot of submitted data (for generate_lead dataLayer push after fields are cleared)
+export const $submittedData = atom<{
+  homeType: string; timeline: string; budget: string;
+  phone: string; email: string;
+  gclid: string; utmSource: string; utmMedium: string;
+  utmCampaign: string; utmTerm: string; utmContent: string;
+  landingPageUrl: string; deviceType: string;
+} | null>(null);
 
 // Direction for slide transitions (1 = forward, -1 = backward)
 export const $direction = atom(1);
@@ -87,6 +97,7 @@ export const $formPayload = computed(
     gclid,
     landing_page_url: landingPageUrl,
     device_type: deviceType,
+    ga4_client_id: getGA4ClientId(),
   })
 );
 
@@ -126,6 +137,7 @@ export function resetForm() {
   $honeypot.set('');
   $isSubmitting.set(false);
   $submitError.set(null);
+  $submittedData.set(null);
 }
 
 export async function submitForm() {
@@ -152,6 +164,23 @@ export async function submitForm() {
         ).toString(),
       });
     }
+
+    // Snapshot form values for generate_lead dataLayer push (before clearing)
+    $submittedData.set({
+      homeType: $homeType.get(),
+      timeline: $timeline.get(),
+      budget: $budget.get(),
+      phone: $phone.get(),
+      email: $email.get(),
+      gclid: $gclid.get(),
+      utmSource: $utmSource.get(),
+      utmMedium: $utmMedium.get(),
+      utmCampaign: $utmCampaign.get(),
+      utmTerm: $utmTerm.get(),
+      utmContent: $utmContent.get(),
+      landingPageUrl: $landingPageUrl.get(),
+      deviceType: $deviceType.get(),
+    });
 
     // Clear persisted form data on success
     $homeType.set('');
