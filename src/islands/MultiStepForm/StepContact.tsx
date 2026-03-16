@@ -27,7 +27,7 @@ const contactSchema = z.object({
     }, 'Phone number must be 10 digits')
     .refine((val) => {
       const digits = val.replace(/\D/g, '');
-      return new Set(digits).size > 1;
+      return !/(.)\1{5,}/.test(digits);
     }, 'Enter a valid phone number'),
   email: z.string().email('Enter a valid email address'),
   consent: z.literal(true, {
