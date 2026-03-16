@@ -19,8 +19,16 @@ const contactSchema = z.object({
   lastName: z.string().min(1, 'Last name is required'),
   phone: z
     .string()
-    .min(10, 'Enter a valid phone number')
-    .regex(/^[\d\s()+.-]+$/, 'Enter a valid phone number'),
+    .min(1, 'Phone number is required')
+    .regex(/^[\d\s().-]+$/, 'Enter a valid US phone number')
+    .refine((val) => {
+      const digits = val.replace(/\D/g, '');
+      return digits.length === 10;
+    }, 'Phone number must be 10 digits')
+    .refine((val) => {
+      const digits = val.replace(/\D/g, '');
+      return new Set(digits).size > 1;
+    }, 'Enter a valid phone number'),
   email: z.string().email('Enter a valid email address'),
   consent: z.literal(true, {
     errorMap: () => ({ message: 'You must agree to continue' }),
