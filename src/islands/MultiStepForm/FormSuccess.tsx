@@ -199,6 +199,8 @@ export default function FormSuccess() {
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 rounded-xl bg-sage px-5 py-3 text-sm font-semibold text-forest transition-colors hover:bg-sage-dark"
+              data-track-element="confirm-browse"
+              data-track-section="confirmation"
             >
               Browse Available Homes
             </a>
@@ -207,6 +209,8 @@ export default function FormSuccess() {
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 rounded-xl bg-sage px-5 py-3 text-sm font-semibold text-forest transition-colors hover:bg-sage-dark"
+              data-track-element="confirm-browse"
+              data-track-section="confirmation"
             >
               Browse Available Duplexes
             </a>

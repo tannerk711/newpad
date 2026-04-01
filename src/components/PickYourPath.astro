@@ -14,6 +14,7 @@ const tiles = [
     href: 'https://www.newpadbuildingco.com/infill-houses',
     image: tileSingleFamily,
     imageAlt: 'A modern new construction single family home in Fort Worth',
+    trackElement: 'browse-infill',
   },
   {
     title: 'Community Homes',
@@ -22,6 +23,7 @@ const tiles = [
     href: 'https://www.newpadbuildingco.com/communities',
     image: tileCommunity,
     imageAlt: 'Aerial view of a NewPad residential community',
+    trackElement: 'browse-communities',
   },
   {
     title: 'Duplexes',
@@ -30,6 +32,7 @@ const tiles = [
     href: 'https://www.newpadbuildingco.com/duplex-homes',
     image: tileDuplex,
     imageAlt: 'A modern new construction duplex in Fort Worth',
+    trackElement: 'browse-duplexes',
   },
 ];
 ---
@@ -50,10 +53,12 @@ const tiles = [
         <a
           href={tile.href}
           data-gsap="tile"
+          data-track-element={tile.trackElement}
+          data-track-section="pick-your-path"
           class="group relative flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
         >
           <!-- Tile photo -->
-          <div class="relative aspect-[4/3] overflow-hidden">
+          <div class="relative aspect-[4/3] overflow-hidden" style="pointer-events: none;">
             <Image
               src={tile.image}
               alt={tile.imageAlt}
@@ -69,13 +74,13 @@ const tiles = [
           </div>
 
           <!-- Text content -->
-          <div class="flex flex-1 flex-col p-6">
+          <div class="flex flex-1 flex-col p-6" style="pointer-events: none;">
             <h3 class="text-xl font-bold text-forest">{tile.title}</h3>
             <p class="mt-2 flex-1 text-sm leading-relaxed text-gray-500">{tile.description}</p>
           </div>
 
           <!-- CTA strip -->
-          <div class="flex items-center justify-between border-t border-gray-200 p-4">
+          <div class="flex items-center justify-between border-t border-gray-200 p-4" style="pointer-events: none;">
             <span class="text-sm font-semibold text-forest">{tile.cta}</span>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5 text-forest transition-transform group-hover:translate-x-1">
               <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
