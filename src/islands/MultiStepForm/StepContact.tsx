@@ -8,6 +8,7 @@ import {
   $phone,
   $email,
   $consent,
+  $homeType,
   $isSubmitting,
   $submitError,
   $honeypot,
@@ -30,9 +31,7 @@ const contactSchema = z.object({
       return !/(.)\1{5,}/.test(digits);
     }, 'Enter a valid phone number'),
   email: z.string().email('Enter a valid email address'),
-  consent: z.literal(true, {
-    errorMap: () => ({ message: 'You must agree to continue' }),
-  }),
+  consent: z.boolean().optional(),
 });
 
 type FieldErrors = Partial<Record<keyof z.infer<typeof contactSchema>, string>>;
@@ -43,6 +42,7 @@ export default function StepContact() {
   const phone = useStore($phone);
   const email = useStore($email);
   const consent = useStore($consent);
+  const homeType = useStore($homeType);
   const isSubmitting = useStore($isSubmitting);
   const submitError = useStore($submitError);
   const honeypot = useStore($honeypot);
@@ -50,7 +50,9 @@ export default function StepContact() {
   const [errors, setErrors] = useState<FieldErrors>({});
   const [touched, setTouched] = useState<Set<string>>(new Set());
 
-  const allFilled = firstName && lastName && phone && email && consent;
+  const allFilled = firstName && lastName && phone && email;
+  const submitLabel =
+    homeType === 'Duplex' ? 'Get My Duplex Matches' : 'Get My New Home Matches';
 
   function handleBlur(field: string) {
     setTouched((prev) => new Set(prev).add(field));
@@ -93,9 +95,9 @@ export default function StepContact() {
       </div>
 
       <div className="mb-4 text-center">
-        <p className="text-sm font-medium text-green-accent">You're almost there!</p>
+        <p className="text-sm font-medium text-green-accent">Great, we have your matches.</p>
         <p className="mt-1 text-xs text-gray-400">
-          Tell us how to reach you and we'll send your matches within 24 hours.
+          What's the best place to send your matches to?
         </p>
       </div>
 
@@ -242,7 +244,7 @@ export default function StepContact() {
             Sending...
           </span>
         ) : (
-          'Get My Matches'
+          submitLabel
         )}
       </motion.button>
     </form>
