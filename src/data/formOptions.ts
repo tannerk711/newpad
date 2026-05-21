@@ -64,28 +64,22 @@ export const singleFamilyBudgetOptions: FormOption[] = [
 
 export const duplexBudgetOptions: FormOption[] = [
   {
-    value: 'Under $450K',
-    label: 'Under $450K',
+    value: '$470K-$500K',
+    label: '$470K - $500K',
     description: '',
     icon: 'budget-1',
-  },
-  {
-    value: '$450K-$500K',
-    label: '$450K - $500K',
-    description: '',
-    icon: 'budget-2',
   },
   {
     value: '$500K-$550K',
     label: '$500K - $550K',
     description: '',
-    icon: 'budget-3',
+    icon: 'budget-2',
   },
   {
     value: '$550K+',
     label: '$550K+',
     description: '',
-    icon: 'budget-4',
+    icon: 'budget-3',
   },
 ];
 

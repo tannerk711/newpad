@@ -15,8 +15,7 @@ const VALUE_MAP: Record<string, string> = {
   '$2k-$2,500/mo': '2k_2500_mo',
   '$2,500+/mo': '2500_plus_mo',
   // Duplex budget (budget range)
-  'Under $450K': 'under_450k',
-  '$450K-$500K': '450k_500k',
+  '$470K-$500K': '470k_500k',
   '$500K-$550K': '500k_550k',
   '$550K+': '550k_plus',
 };
