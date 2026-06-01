@@ -100,6 +100,12 @@ export default function FormSuccess() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fireConfetti = useConfetti(canvasRef);
 
+  // Home type for the personalized closing line (lowercased to read naturally mid-sentence)
+  const submitted = $submittedData.get();
+  const homeTypePhrase = submitted?.homeType
+    ? submitted.homeType.toLowerCase()
+    : 'new home';
+
   useEffect(() => {
     const timer = setTimeout(fireConfetti, 300);
     return () => clearTimeout(timer);
@@ -184,7 +190,7 @@ export default function FormSuccess() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
         >
-          The Newpad Team will send personalized options within 24 hours.
+          The Newpad team will reach out shortly to give you personalized matches, answer any questions you may have and, if you're interested, help you buy a {homeTypePhrase}.
         </motion.p>
 
         <motion.div
